@@ -2,13 +2,15 @@
 __pycache__/
 *.py[cod]
 
+# Vim files
+*.swp
+
 # C extensions
 *.so
 
 # Distribution / packaging
 .Python
 env/
-bin/
 build/
 develop-eggs/
 dist/
@@ -52,3 +54,5 @@ coverage.xml
 # Sphinx documentation
 docs/_build/
 
+# Virtualenv
+venv/

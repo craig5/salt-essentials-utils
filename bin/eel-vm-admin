@@ -1,0 +1,11 @@
+#!/usr/bin/env python
+"""Script to help manage virtualbox install/setup/..."""
+
+
+# Trying to be nice to python 3.
+import __future__
+
+
+print("VM stuff...")
+
+# End of file.
