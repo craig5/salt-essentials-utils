@@ -1,0 +1,4 @@
+include requirements.txt
+recursive-include data *
+include README.md
+include CHANGELOG.md
