@@ -11,7 +11,7 @@ import sys
 
 _NAME = 'salt_essentials_utils'
 _PYTHON_PKG_NAME = 'salt_essentials'
-_PKG_VERSION = '0.0.2'
+_PKG_VERSION = '0.0.3'
 _PKG_DESCRIPTION = 'Suite of utilities and scripts for Salt Essentials.'
 _PKG_AUTHOR_NAME = 'Craig Sebenik'
 _PKG_AUTHOR_EMAIL = 'craig5@pobox.com'

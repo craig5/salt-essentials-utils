@@ -1,0 +1,114 @@
+#!/usr/bin/env python
+# vim: set filetype=python expandtab ts=4 shiftwidth=4 autoindent smartindent:
+"""Manage VirtualBox VMs for Salt Essentials book."""
+
+
+# python core
+import argparse
+import logging
+import sys
+# third party
+import yaml
+# custom
+import salt_essentials
+import salt_essentials.virtual_box
+
+
+_VERSION = '0.1'
+_DEFAULT_LOGGER_LEVEL = logging.WARN
+_DEFAULT_VIRTUALBOX_CMD = '/usr/bin/VBoxManage'
+
+
+# Put it in the script just to make things simpler.
+_YAML_CONFIG = """
+defaults:
+  ram: 512
+  disk-size: 8192
+  domain: example.com
+  os: CentOS
+
+machines:
+- name: master
+- name: minion1
+- name: minion2
+- name: minion3
+  os: Ubuntu
+- name: minion4
+  os: Ubuntu
+operating-systems:
+- CentOS:
+  - iso: foo
+- Ubuntu:
+  - iso: foo
+"""
+
+
+class VBoxCli(object):
+
+    def __init__(self):
+        self.__init_logger()
+        self.__init_vars()
+        self.__init_cli()
+        # Need to parse args to load diff configs, etc.
+        self.parse_args()
+        self.__load_config()
+
+    def __init_logger(self):
+        logger_name = self.__class__.__name__
+        # TODO fix logging
+        # Set to root logger so setting to debug below works for all loggers
+        logger_name = ''
+        self.logger = logging.getLogger(logger_name)
+        self.logger.setLevel(_DEFAULT_LOGGER_LEVEL)
+        handler = logging.StreamHandler()
+        handler.setLevel(_DEFAULT_LOGGER_LEVEL)
+        format_string = '%(asctime)s [%(levelname)s] %(name)s - %(message)s'
+        formatter = logging.Formatter(format_string)
+        handler.setFormatter(formatter)
+        self.logger.addHandler(handler)
+        self.logger.debug("Logger initialized: {0}".format(logger_name))
+
+    def __init_vars(self):
+        self.logger.debug('Initializing vars.')
+        self.vbox_cmd = _DEFAULT_VIRTUALBOX_CMD
+        self.machines = dict()
+
+    def __init_cli(self):
+        self.logger.debug('Initializing cli.')
+        self.cli = argparse.ArgumentParser(description=__doc__)
+        self.cli.add_argument(
+            '--debug',
+            action='store_true',
+            help='Set to debug, includes logging.'
+            )
+
+    def __load_config(self):
+        self.logger.debug('Loading config.')
+        yaml_string = _YAML_CONFIG
+        self.config = yaml.load(yaml_string)
+
+    def parse_args(self):
+        self.logger.debug('Parsing args.')
+        self.args = self.cli.parse_args()
+        if 'debug' in self.args and self.args.debug is True:
+            debug_level = logging.DEBUG
+            self.logger.setLevel(debug_level)
+            root_logger = logging.getLogger()
+            root_logger.setLevel(debug_level)
+            for handler in self.logger.handlers:
+                handler.setLevel(debug_level)
+            self.logger.debug('Reset logging to debug.')
+
+    def __call__(self):
+        self.logger.debug('Inside call: {0}'.format(self.__class__.__name__))
+        vm_mgr = salt_essentials.virtual_box.Manager(self.config)
+        # TODO fix this entire "get machines"...
+        # vm_mgr.machine should return a dict or a list
+        for machine_name in vm_mgr.machines:
+            machine = vm_mgr.get_machine(machine_name)
+            machine.show_info()
+
+if __name__ == '__main__':
+    vbc = VBoxCli()
+    vbc()
+# End of file.
