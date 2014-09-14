@@ -1,0 +1,50 @@
+- file: jane-state.yaml
+  dest: default.sls
+- cmd: cat /srv/salt/default.sls
+- cmd: salt master.example.com state.single user.present name=jane  fullname='Jane Doe' uid=1001
+- cmd: salt master.example.com state.low '{name: jane, uid: 1001, state: user, fun: present}'
+- cmd: salt master.example.com state.show_sls default --out yaml
+- file: jane-fred-state.yaml
+  dest: default.sls
+- cmd: salt-call config.get file_roots
+- cmd: cat /srv/salt/top.sls
+- cmd: salt master.example.com state.show_highstate --out yaml
+- cmd: salt '*' state.highstate
+- cmd: mkdir /srv/salt/default
+- cmd: mv /srv/salt/default.sls /srv/salt/default/users.sls
+- file: top-4.1.yaml
+  dest: top.sls
+- cmd: cat /srv/salt/top.sls
+- cmd: salt master.example.com state.show_highstate --out yaml
+- file: packages-1.sls
+  dest: packages.sls
+- file: top-4.2.sls
+  dest: top.sls
+- file: default-all.sls
+  dest: /srv/salt/file/base/default/all.sls
+- file: top-3.sls
+  dest: {{ file_base }}/default.sls
+- file: {{ chapter_dir }}/default-dots.sls
+  dest: {{ file_base }}/default/all.sls
+- file: {{ chapter_dir }}/default-dots.sls
+  dest: {{ file_base }}/default/init.sls
+  rm: {{ file_base }}/default/all.sls
+- file: {{ chapter_dir }}/top-def-init.sls
+  dest: {{ file_base }}/top.sls
+- cmd: salt master.example.com state.show_highstate --out yaml
+- file: {{ chapter_dir }}/no-pkgs.sls
+  dest: {{ file_base }}/default/no-pkgs.sls
+- file: {{ chapter_dir }}/no-jane.sls
+  dest: {{ file_base }}/default/no-jane.sls
+- file: {{ chapter_dir }}/top-master.sls
+  dest: {{ file_base }}/top.sls
+- cmd: salt master.example.com state.show_highstate --out yaml
+- file: {{ chapter_dir }}/top-init.sls
+  dest: {{ file_base }}/top.sls
+- file: {{ chatper_dir }}/top-min1.sls
+  dest: {{ file_base }}/top.sls
+- file: {{ chapter_dir }}/webserver-init.sls
+  dest: {{ file_base }}/webserver/init.sls
+- file: {{ chapter_dir }}/webserver-init2.sls
+  dest: {{ file_base }}/webserver/init.sls
+

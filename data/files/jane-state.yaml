@@ -1,0 +1,6 @@
+user_jane:
+  user.present:
+    - user: jane
+    - fullname: Jane Doe
+    - uid: 1001
+    - home: /home/jane

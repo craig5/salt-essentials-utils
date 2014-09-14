@@ -1,0 +1,4 @@
+httpd:
+  pkg:
+    - installed
+

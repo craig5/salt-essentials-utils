@@ -1,0 +1,4 @@
+- cmd: salt master.example.com grains.ls
+- cmd: salt '*' grains.item os
+- cmd: salt '*' grains.item roles
+

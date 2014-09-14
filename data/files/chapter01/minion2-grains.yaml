@@ -1,0 +1,4 @@
+grains:
+  roles:
+  - appserver
+  - other
