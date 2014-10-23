@@ -1,0 +1,12 @@
+
+
+- Final:
+	master with multiple envs
+	pillars
+		ext pillar: user data (yaml)
+	grains
+		roles
+	states
+		users
+		pkgs
+	modules
