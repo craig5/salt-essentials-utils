@@ -1,0 +1,36 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+# Vagrantfile API/syntax version. Don't touch unless you know what you're doing!
+VAGRANTFILE_API_VERSION = "2"
+
+domain = 'example'
+def_network = '172.31.0'
+def_ram = '512'
+os_ubuntu = "ubuntu/trusty64"
+#os_centos = "matyunin/centos7"
+os_centos = "chef/centos-6.5"
+
+nodes = [
+  { :hostname => 'master', :ip => def_network+'.11', :box => os_centos},
+  { :hostname => 'minion1', :ip => def_network+'.21', :box => os_centos},
+  { :hostname => 'minion2', :ip => def_network+'.22', :box => os_centos},
+  { :hostname => 'minion3', :ip => def_network+'.23', :box => os_ubuntu},
+  { :hostname => 'minion4', :ip => def_network+'.24', :box => os_ubuntu},
+]
+
+Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+  nodes.each do |node|
+    config.vm.define node[:hostname] do |node_config|
+      config.vm.provider 'virtualbox' do |vb|
+        vb.name = node[:hostname]
+        vb.memory = node[:ram] ? node[:ram] : def_ram;
+      end
+      node_config.vm.box = node[:box]
+      node_config.vm.hostname = node[:hostname] + '.' + domain
+      node_config.vm.network 'private_network', ip: node[:ip],
+        virtualbox__intnet: 'salt'
+
+    end
+  end
+end
