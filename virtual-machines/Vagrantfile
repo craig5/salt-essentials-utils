@@ -30,7 +30,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       node_config.vm.hostname = node[:hostname] + '.' + domain
       node_config.vm.network 'private_network', ip: node[:ip],
         virtualbox__intnet: 'salt'
-
+      node_config.vm.synced_folder '..', '/srv/se-book'
     end
   end
 end
