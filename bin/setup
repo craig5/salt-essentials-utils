@@ -1,0 +1,101 @@
+#!/usr/bin/env python
+"""Setup the host for Salt Essentials."""
+
+
+from __future__ import print_function
+# Need to support python 2.6, so no argparse. :(
+import logging
+import optparse
+import platform
+import subprocess
+
+
+_DEFAULT_LOGGER_LEVEL = logging.INFO
+# _DEFAULT_LOGGER_LEVEL = logging.DEBUG
+_SALT_BOOTSTRAP_URL = 'http://bootstrap.saltstack.org'
+_SALT_MASTER_IP_ADDRESS = '172.31.0.11'
+
+
+class SaltEssentialsSetupCLI(object):
+
+    def __init__(self):
+        self.__init_logger()
+        self.__init_cli()
+
+    def __init_logger(self):
+        name = self.__class__.__name__
+        log_level = _DEFAULT_LOGGER_LEVEL
+        self.logger = logging.getLogger(name)
+        self.logger.setLevel(log_level)
+        format_str = '[%(levelname)s] - %(message)s'
+        formatter = logging.Formatter(fmt=format_str)
+        handler = logging.StreamHandler()
+        handler.setFormatter(formatter)
+        handler.setLevel(log_level)
+        self.logger.addHandler(handler)
+        self.logger.debug('Logger initialized: {0}'.format(name))
+
+    def __init_cli(self):
+        self.cli = optparse.OptionParser(description=__doc__)
+        self.cli.add_option(
+            '--debug',
+            action='store_true',
+            help='Debug mode (more logging)')
+
+    def parse_args(self):
+        self.logger.debug('Parsing args.')
+        opts, args = self.cli.parse_args()
+        self.logger.debug('Opts: {0}'.format(opts))
+        if opts.debug:
+            self.logger.debug('Setting log level to debug.')
+            self.logger.setLevel(logging.DEBUG)
+            for hand in self.logger.handlers:
+                hand.setLevel(logging.DEBUG)
+            self.logger.debug('Log level reset to debug.')
+
+    def main(self):
+        self.logger.debug('Running main.')
+        self.parse_args()
+        self.load_vars()
+        install_script = '/tmp/install-salt.sh'
+        cmd = [
+            'curl',
+            '--insecure',
+            '-L',
+            _SALT_BOOTSTRAP_URL,
+            '-o',
+            install_script]
+        self.__run_cmd(cmd)
+        cmd = ['sudo', 'bash', install_script]
+        if self.hostname.startswith('master.'):
+            self.logger.debug('Loading master.')
+            cmd.append('-M')
+        cmd.extend(['-A', self.master_ip])
+        self.__run_cmd(cmd)
+
+    def __run_cmd(self, cmd):
+        self.logger.debug('Running command: {0}'.format(cmd))
+        proc = subprocess.Popen(
+            cmd,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE)
+        stdout, stderr = proc.communicate()
+        return_code = proc.returncode
+        self.logger.debug('Return code: {0}'.format(return_code))
+        self.logger.debug('Stdout: {0}'.format(stdout))
+        self.logger.debug('Stderr: {0}'.format(stderr))
+
+    def load_vars(self):
+        self.logger.debug('Loading vars.')
+        self.hostname = platform.node()
+        self.logger.debug('Host name: {0}'.format(self.hostname))
+        # self.os_type = platform.linux_distribution()
+        # self.logger.debug('OS type: {0}'.format(self.os_type))
+        self.master_ip = _SALT_MASTER_IP_ADDRESS
+
+
+if __name__ == '__main__':
+    se = SaltEssentialsSetupCLI()
+    se.main()
+
+# End of file.

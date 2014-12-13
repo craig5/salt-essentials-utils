@@ -8,8 +8,7 @@ domain = 'example'
 def_network = '172.31.0'
 def_ram = '512'
 os_ubuntu = "ubuntu/trusty64"
-#os_centos = "matyunin/centos7"
-os_centos = "chef/centos-6.5"
+os_centos = "chef/centos-6.6"
 
 nodes = [
   { :hostname => 'master', :ip => def_network+'.11', :box => os_centos},
