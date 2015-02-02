@@ -1,0 +1,14 @@
+
+
+[vagrant@master ~]$ more /srv/salt/files/base/orch/web_app.sls
+data_update:
+  salt.state:
+  - tgt: 'database'
+  - tgt_type: grain
+  - sls: db.update
+
+web_update:
+  salt.state:
+  - tgt: 'webserver'
+  - tgt_type: grain
+  - sls: web.update
