@@ -2,4 +2,4 @@ user_betty:
   user.present:
   - name: betty
   - fullname: Betty Rubble
-  - uid: 1004
+  - uid: 2004
