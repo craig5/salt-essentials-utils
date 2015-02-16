@@ -66,10 +66,11 @@ class SaltEssentialsSetupCLI(object):
             '-o',
             install_script]
         self.__run_cmd(cmd)
-        cmd = ['sudo', 'bash', install_script]
+        cmd = ['sudo', 'bash', install_script, '-Z']
         if self.hostname.startswith('master.'):
             self.logger.debug('Loading master.')
             cmd.append('-M')
+            cmd.extend(['-P', '-p', 'salt-cloud'])
         cmd.extend(['-A', self.master_ip])
         self.__run_cmd(cmd)
 
