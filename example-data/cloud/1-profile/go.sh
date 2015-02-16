@@ -6,7 +6,12 @@ scriptsDir=/srv/salt/scripts
 modulesDir=/srv/salt/modules
 reactorDir=/srv/salt/reactor
 runnerDir=/srv/salt/runner
+#
 confDir=/etc/salt/master.d
+cloudProfile=/etc/salt/cloud.profiles.d
+cloudProviders=/etc/salt/cloud.providers.d
+cloudMaps=/etc/salt/cloud.maps.d
+cloudConf=/etc/salt/cloud.conf.d
 
 sudo mkdir -p $fileRoot
 sudo mkdir -p $pillarRoot
@@ -14,6 +19,9 @@ sudo mkdir -p $scriptsDir
 sudo mkdir -p $runnerDir
 
 sudo rsync -Cavz --delete $srcDir/master.d/ $confDir
+#
+sudo rsync -Cavz --delete $srcDir/master.d/ $confDir
+#
 sudo rsync -Cavz --delete $srcDir/file-base/ $fileRoot
 sudo rsync -Cavz --delete $srcDir/pillar-base/ $pillarRoot
 sudo rsync -Cavz --delete $srcDir/scripts/ $scriptsDir
