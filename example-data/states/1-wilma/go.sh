@@ -1,4 +1,11 @@
 #!/bin/bash
-sudo mkdir -p /srv/salt/file/base/
-cp /srv/se-book/example-data/states/1-wilma/user-wilma.sls \
-	/srv/salt/file/base/
+srcDir=/srv/se-book/example-data/states/1-wilma
+fileRoot=/srv/salt/file/base
+confDir=/etc/salt/master.d
+
+sudo mkdir -p $fileRoot
+
+sudo rsync -Cavz --delete $srcDir/file-base/ $fileRoot
+sudo rsync -Cavz --delete $srcDir/master.d/ $confDir
+
+sudo service salt-master restart

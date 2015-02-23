@@ -7,5 +7,3 @@ sudo mkdir -p $fileRoot
 
 sudo rsync -Cavz --delete $srcDir/file-base/ $fileRoot
 sudo rsync -Cavz --delete $srcDir/master.d/ $confDir
-
-sudo service salt-master restart

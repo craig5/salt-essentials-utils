@@ -7,6 +7,9 @@ base:
   - match: grain
   - default.vim
 
+  'minion1.example':
+  - roles.webserver
+
   'minion2.example':
   - users.dba
 
@@ -16,4 +19,3 @@ base:
 
   'minion4.example':
   - users.all
-  - roles.webserver

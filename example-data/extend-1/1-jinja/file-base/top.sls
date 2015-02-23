@@ -7,6 +7,15 @@ base:
   - match: grain
   - default.vim
 
+  'roles:webserver':
+  - match: grain
+  - roles.webserver
+  - sites
+
+  'roles:database':
+  - match: grain
+  - users.dba
+
   'myenv:stage':
   - match: grain
   - users.qa
@@ -14,12 +23,4 @@ base:
   'myenv:dev':
   - match: grain
   - users.all
-
-  'roles:database':
-  - match: grain
-  - users.dba
-
-  'roles:webserver':
-  - match: grain
-  - roles.webserver
-  - sites
+  - run_first
