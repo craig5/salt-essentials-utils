@@ -1,5 +1,5 @@
 #!/bin/bash
-srcDir=/srv/se-book/example-data/cloud/1-profile
+srcDir=/srv/se-book/example-data/cloud/1-master
 fileRoot=/srv/salt/file/base
 pillarRoot=/srv/salt/pillar/base
 scriptsDir=/srv/salt/scripts
@@ -22,7 +22,7 @@ sudo mkdir -p $runnerDir
 sudo rsync -Cavz --delete $srcDir/master.d/ $confDir
 #
 sudo rsync -Cavz --delete $srcDir/cloud/profiles/ $cloudProfiles
-sudo rsync -Cavz --delete $srcDir/cloud/providers/ $cloudProviders
+#sudo rsync -Cavz --delete $srcDir/cloud/providers/ $cloudProviders
 sudo rsync -Cavz --delete $srcDir/cloud/deploy/ $cloudDeploy
 sudo rsync -Cavz --delete $srcDir/cloud/maps/ $cloudMaps
 sudo rsync -Cavz --delete $srcDir/cloud/conf/ $cloudConf
