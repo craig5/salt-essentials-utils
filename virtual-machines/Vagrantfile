@@ -8,7 +8,7 @@ domain = 'example'
 def_network = '172.31.0'
 def_ram = '512'
 os_ubuntu = "ubuntu/trusty64"
-os_centos = "chef/centos-6.6"
+os_centos = "bento/centos-6.7"
 
 nodes = [
   { :hostname => 'master', :ip => def_network+'.11', :box => os_centos},
@@ -21,7 +21,7 @@ nodes = [
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   nodes.each do |node|
     config.vm.define node[:hostname] do |node_config|
-      config.vm.provider 'virtualbox' do |vb|
+      node_config.vm.provider 'virtualbox' do |vb|
         vb.name = node[:hostname]
         vb.memory = node[:ram] ? node[:ram] : def_ram;
       end
