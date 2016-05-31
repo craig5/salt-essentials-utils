@@ -21,7 +21,7 @@ nodes = [
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   nodes.each do |node|
     config.vm.define node[:hostname] do |node_config|
-      config.vm.provider 'virtualbox' do |vb|
+      node_config.vm.provider 'virtualbox' do |vb|
         vb.name = node[:hostname]
         vb.memory = node[:ram] ? node[:ram] : def_ram;
       end

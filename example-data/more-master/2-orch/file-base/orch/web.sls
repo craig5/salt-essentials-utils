@@ -7,7 +7,7 @@ data_update:
 
 web_update:
   salt.state:
-  - tgt: 'roles:webserver and G@myenv:{{ myenv }}'
+  - tgt: 'G@roles:webserver and G@myenv:{{ myenv }}'
   - tgt_type: compound
   - sls: roles.webserver
   - require:

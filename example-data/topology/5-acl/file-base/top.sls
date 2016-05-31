@@ -9,4 +9,4 @@ base:
   - sites
 
   'master.example':
-  - master_setup
+  - master
