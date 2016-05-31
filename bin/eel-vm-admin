@@ -4,8 +4,34 @@
 
 # Trying to be nice to python 3.
 import __future__
+# python core
+import logging
+# third party
+import virtualbox
+# custom packages
 
 
-print("VM stuff...")
+_DEFAULT_LOGGER_LEVEL = logging.DEBUG
 
+
+class EelVirtualBoxAdmin(object):
+
+    def __init__(self):
+        logger_name = self.__class__.__name__
+        logger_level = _DEFAULT_LOGGER_LEVEL
+        logging.basicConfig()
+        self.logger = logging.getLogger(logger_name)
+        self.logger.setLevel(logger_level)
+        self.logger.debug('Logger initialized.')
+
+    def __call__(self):
+        self.logger.debug('Inside call.')
+        vbox = virtualbox.VirtualBox()
+        for cur in vbox.machines:
+            print(cur)
+
+
+if __name__ == '__main__':
+    eel = EelVirtualBoxAdmin()
+    eel()
 # End of file.

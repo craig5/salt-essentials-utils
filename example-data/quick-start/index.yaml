@@ -1,0 +1,33 @@
+- cmd: curl --insecure -L http://bootstrap.saltstack.org -o install-salt.sh
+- cmd: tail -1 /var/log/salt/minion
+
+- cmd: salt master.example test.ping
+- cmd: salt minion1.example test.ping
+- cmd: salt-call test.ping
+- cmd: salt-run manage.up
+- cmd: salt-key
+- cmd: salt-key --list=acc
+- cmd: salt-key --finger-all
+- cmd: salt-key --accept=minion1.example.com
+
+- cmd: salt-key --reject='minion1*'
+- cmd: salt-key -A
+- cmd: salt-key --reject='minion2*'
+- cmd: salt-key --reject='minion2*' --include-all
+
+- cmd: salt \* test.ping
+- cmd: salt 'minion*' test.ping
+- cmd: salt -L 'minion1.example.com,minion3.example.com' test.ping
+- cmd: salt -E 'minion(1|3)' test.ping
+- cmd: salt -G 'os:CentOS' test.ping
+- cmd: salt -C 'G@os:CentOS and G@myenv:prod' test.ping
+- file: master-grains.conf
+- file: minion1-grains.conf
+- file: minion2-grains.conf
+- file: minion3-grains.conf
+- file: minion4-grains.conf
+
+- cmd: salt 'minion1*' grains.item roles
+- cmd: salt -G 'myenv:prod' test.ping
+- cmd: salt -G 'roles:appserver' test.ping
+

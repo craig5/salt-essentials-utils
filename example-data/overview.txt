@@ -1,0 +1,33 @@
+- Final:
+	master with multiple envs
+	pillars
+		users: fred, barney, wilma, betty
+		ext pillar: user data (yaml)
+		ext pillar: sw version
+	grains
+		roles
+		type
+	states
+		users
+		pkgs: httpd, mysql
+		configs: httpd mysql
+		httpd files: v1.html, v2.html, v3.html
+	modules:
+		web_app.deploy
+		web_app.show_version
+
+	runners
+		web_app.deploy: 1 host at a time
+	multiple-envs: qa
+		pillars for diff versions
+		grains for host types
+	syndic
+	peer:
+		allow others to update sw versions on qa host
+
+Notes:
+	- read the docs!!
+		commands run on multiple archs/OSs
+		pkgs = yum and apt
+		lowest common denominator
+	- test=true for states

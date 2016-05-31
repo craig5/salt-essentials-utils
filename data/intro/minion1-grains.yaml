@@ -1,4 +1,0 @@
-grains:
-  roles:
-  - webserver
-  - other

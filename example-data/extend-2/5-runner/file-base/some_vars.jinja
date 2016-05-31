@@ -1,0 +1,4 @@
+{% set var = 'the string' %}
+some_var_include:
+  cmd.run:
+  - name: "echo 'From include, var is {{ var }}'"

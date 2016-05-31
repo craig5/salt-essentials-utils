@@ -1,0 +1,7 @@
+- id: ls
+  cmd: salt master.example.com grains.ls
+- id: item.os
+  cmd: salt '*' grains.item os
+- id: item.roles
+  cmd: salt '*' grains.item roles
+

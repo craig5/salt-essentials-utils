@@ -19,7 +19,7 @@ help:
 	@echo "	clean		Delete various development files and dirs."
 	@echo "	help		This message."
 
-_master_rpms:
+_base_rpms:
 	sudo rpm --import $(RPMFORGE_KEY)
 	@# Use '--replacepkgs' so the command can be run many times.
 	sudo rpm -i --replacepkgs $(RPMFORGE_URL)
@@ -27,9 +27,13 @@ _master_rpms:
 	sudo yum update -y
 	sudo yum install -y python-virtualenv.noarch
 
-master: _master_rpms
+master: _base_rpms
 	wget --no-check-certificate $(BOOTSTRAP_URL) -O $(BOOTSTRAP_FILE)
 	sudo bash $(BOOTSTRAP_FILE) -M -U -A $(MASTER_IP)
+
+minion:
+	wget --no-check-certificate $(BOOTSTRAP_URL) -O $(BOOTSTRAP_FILE)
+	sudo bash $(BOOTSTRAP_FILE) -U -A $(MASTER_IP)
 
 master-manual: _master_rpms
 	sudo yum install -y salt-minion salt-master

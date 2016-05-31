@@ -1,0 +1,25 @@
+- cmd: salt \* sys.doc test.ping
+- cmd: salt \* cmd.run 'grep root /etc/passwd'
+- cmd: salt \* user.add fred 1001
+- cmd: salt \* cmd.run 'grep fred /etc/passwd'
+- cmd: salt \* user.chfullname fred 'Fred Flintstone'
+- cmd: salt \* cmd.run 'grep fred /etc/passwd'
+- cmd: salt-call sys.doc user
+- cmd: salt \* pkg.latest_version at
+- cmd: salt \* pkg.install at
+- cmd: salt \* pkg.available_version logrotate
+- cmd: salt \* pkg.install logrotate
+- cmd: salt \* pkg.available_version at
+- cmd: salt minion1.example pkg.install httpd
+- cmd: salt minion1.example service.available httpd
+- cmd: salt minion1.example service.enable httpd
+- cmd: salt minion1.example service.status httpd
+- cmd: salt minion1.example service.start httpd
+- cmd: salt minion1.example service.status httpd
+- cmd: salt master.example cmd.run template=jinja "echo {{grains.os}}"
+- cmd: salt master.example cmd.run stdin="one\ntwo\nthree" "grep t"
+- cmd: salt --verbose master.example test.ping
+- cmd: salt-run jobs.lookup_jid 20140616052137924343
+- cmd: salt --log-level debug master.example test.ping
+- cmd: salt --timeout=10 \* test.ping
+- cmd: salt --output=yaml  \* test.ping
