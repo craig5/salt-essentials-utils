@@ -66,7 +66,7 @@ class SaltEssentialsSetupCLI(object):
             '-o',
             install_script]
         self.__run_cmd(cmd)
-        cmd = ['sudo', 'bash', install_script, '-Z']
+        cmd = ['sudo', 'bash', install_script]
         if self.hostname.startswith('master.'):
             self.logger.debug('Loading master.')
             cmd.append('-M')
@@ -98,5 +98,3 @@ class SaltEssentialsSetupCLI(object):
 if __name__ == '__main__':
     se = SaltEssentialsSetupCLI()
     se.main()
-
-# End of file.
