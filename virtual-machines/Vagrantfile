@@ -7,8 +7,8 @@ VAGRANTFILE_API_VERSION = "2"
 domain = 'example'
 def_network = '172.31.0'
 def_ram = '512'
-os_ubuntu = "ubuntu/trusty64"
-os_centos = "bento/centos-6.7"
+os_ubuntu = "ubuntu/focal64"
+os_centos = "centos/8"
 
 nodes = [
   { :hostname => 'master', :ip => def_network+'.11', :box => os_centos},
@@ -29,6 +29,9 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       node_config.vm.hostname = node[:hostname] + '.' + domain
       node_config.vm.network 'private_network', ip: node[:ip],
         virtualbox__intnet: 'salt'
+      node_config.vbguest.auto_update = true
+      node_config.vbguest.no_remote = true
+      node_config.vbguest.installer_options = { allow_kernel_upgrade: true }
       node_config.vm.synced_folder '..', '/srv/se-book'
     end
   end
