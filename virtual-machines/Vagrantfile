@@ -7,8 +7,8 @@ VAGRANTFILE_API_VERSION = "2"
 domain = 'example'
 def_network = '172.31.0'
 def_ram = '512'
-os_ubuntu = "ubuntu/trusty64"
-os_centos = "bento/centos-6.7"
+os_ubuntu = "bento/ubuntu-18.04"
+os_centos = "bento/centos-8"
 
 nodes = [
   { :hostname => 'master', :ip => def_network+'.11', :box => os_centos},
