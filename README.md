@@ -16,9 +16,24 @@ vagrant up
 That will bring up 5 virtual machines: 1 salt master and 4 salt minions.
 
 Then ssh into each VM and install salt:
+
+For master and minion1,2
 ```
 vagrant ssh master
-/srv/se-book/bin/setup
+
+sudo /srv/se-book/bin/fix-centos.sh
+
+sudo /srv/se-book/bin/setup
+```
+
+For minion3,4
+
+```
+vagrant ssh minion3
+
+sudo /srv/se-book/bin/fix-ubuntu.sh
+
+sudo /srv/se-book/bin/setup
 ```
 
 At this point, `salt` is installed on each VM.

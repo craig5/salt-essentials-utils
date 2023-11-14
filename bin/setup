@@ -10,9 +10,12 @@ import platform
 import subprocess
 
 
-_DEFAULT_LOGGER_LEVEL = logging.INFO
-# _DEFAULT_LOGGER_LEVEL = logging.DEBUG
-_SALT_BOOTSTRAP_URL = 'http://bootstrap.saltstack.org'
+# _DEFAULT_LOGGER_LEVEL = logging.INFO
+_DEFAULT_LOGGER_LEVEL = logging.DEBUG
+
+# _SALT_BOOTSTRAP_URL = 'http://bootstrap.saltstack.org'
+_SALT_BOOTSTRAP_URL = 'https://bootstrap.saltproject.io'
+
 _SALT_MASTER_IP_ADDRESS = '172.31.0.11'
 
 
